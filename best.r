@@ -1,29 +1,26 @@
 
 best <- function(state, outcome) {
-     ## Read outcome data
+    ##Load necessary packages
+    if (!require("dplyr")) {
+        install.packages("dplyr")
+        library("dplyr")
+    }
+    
+    ## Read outcome data
      MyData <- read.csv(file="outcome-of-care-measures.csv", header=TRUE, 
           sep=",", na.strings= "Not Available", stringsAsFactors=FALSE )
+     
+     ##rename long column names
      names(MyData)[11] <- "heart_attack"
      names(MyData)[17] <- "heart_failure"
      names(MyData)[23] <- "pneumonia"
-     ##print(head(MyData))
-     ##print(str(MyData))
+     
      ##create subsets of state factors and outcome
      MyDataStates = unique(MyData$State)
-     outcomes = c("heart attack"=11, "heart failure" =17, "pneumonia"=23) 
-     
-     ##print(str(MyData))
-     
-     ##new_df = MyData[, c(2,7,outcomes[outcome])]
-     
-     ##print(str(new_df))
-     
-     ##print(class(outcomes))
-     ##Outcomes_cols = c(11, 17, 23)
-     ##Outcomes_combined = data.frame(outcomes=Avail_Outcomes, col_num = Outcomes_cols)
+     outcomes = c("heart attack"=11, "heart failure" =17, "pneumonia"=23)
+     Avail_Outcomes = c("heart attack", "heart failure", "pneumonia")
      
     
-     ##browser()
      ## Check that state and outcome are valid
      if (any(MyDataStates == state & any(Avail_Outcomes == outcome))) { 
      
@@ -57,3 +54,4 @@ best <- function(state, outcome) {
      ## Return hospital name in that state with lowest 30-day death
      ## rate   
 }
+
